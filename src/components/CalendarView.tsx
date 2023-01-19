@@ -13,14 +13,9 @@ export function CalendarView(props: {
 
 	return (
 		<div className={styles.Container}>
-
-			<DayColumn weekday="Monday" date={15} hours={12} />
-			<DayColumn weekday="Tuesday" date={15} hours={12} />
-			<DayColumn weekday="Wednesday" date={15} hours={12} />
-			<DayColumn weekday="Thursday" date={15} hours={12} />
-			<DayColumn weekday="Friday" date={15} hours={12} />
-			<DayColumn weekday="Saturday" date={15} hours={12} />
-			<DayColumn weekday="Sunday" date={15} hours={12} />
+			{week.map((weekday, index) =>
+				<DayColumn key={index} weekday={weekday} date={props.startDate + index} hours={props.hours} />
+			)}
 		</div>
 	);
 }
