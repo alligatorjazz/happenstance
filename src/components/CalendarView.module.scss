@@ -1,0 +1,53 @@
+.Container {
+	display: flex;
+}
+
+.Column {
+	flex: 1;
+
+	&>h3,
+	&>h4,
+	&>.Cell {
+		text-align: center;
+	}
+
+	&>h3 {
+		margin: 0;
+	}
+
+	&>h4 {
+		margin: 0.5rem 0;
+	}
+
+	.Cell {
+		$border-color: darkgray;
+		
+		box-shadow: inset 1px 1px 0 $border-color;
+		cursor: pointer;
+		user-select: none;
+
+		min-height: 40px;
+		&:last-child {
+			border-bottom: 1px solid darkgray;
+		}
+
+		display: flex;
+		flex-direction: column;
+		
+		.Subcell {
+			flex: 1;
+			border: 1px solid rgb(158, 237, 158, 0.3);
+			&.Active {
+				background-color: magenta;
+			}
+		}
+	}
+
+	&:last-child {
+		.Cell {
+			border-right: 1px solid darkgray;
+		}
+	}
+
+
+}
