@@ -1,4 +1,5 @@
 import { DOMAttributes, MouseEventHandler } from "react";
+import { number } from "zod";
 import { TimeBlock, Weekday, weekdays } from "../types";
 
 export type CalendarState = {
@@ -32,4 +33,14 @@ export function bindCell({ setDivisions }: CalendarState, position: number): DOM
 		onClick: updateCell,
 		onMouseEnter: updateCellIfMouseDown
 	};
+}
+
+// TODO: implement
+// export function exportBlocks(date: Date, { divisions }: CalendarState) {
+
+// }
+
+export function to12Hour(hour: number) {
+	const meridian = hour >= 12 ? "pm" : "am"; 
+	return `${(hour % 12) || 12}${meridian}`;
 }

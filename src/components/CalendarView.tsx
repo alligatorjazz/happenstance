@@ -48,10 +48,10 @@ function DayColumn(props: {
 			return <div key={hour} className={styles.Cell}>
 				<div {...bindCell(state, cellLocation)} className={
 					`${styles.Subcell} ${state.divisions[cellLocation] ? styles.Active : ""}`
-				}>{cellLocation}</div>
+				}></div>
 				<div {...bindCell(state, cellLocation + 1)} className={
 					`${styles.Subcell} ${state.divisions[cellLocation + 1] ? styles.Active : ""}`
-				}>{cellLocation + 1}</div>
+				}></div>
 			</div>;
 		});
 
