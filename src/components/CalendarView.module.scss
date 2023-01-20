@@ -22,9 +22,10 @@
 	.Cell {
 		$border-color: darkgray;
 		
-		box-shadow: inset 1px 1px 0 $border-color;
+		// box-shadow: inset 1px 1px 0 $border-color;
 		cursor: pointer;
 		user-select: none;
+		border: 1px solid rgb(158, 237, 158, 0.3);
 
 		min-height: 40px;
 		&:last-child {
@@ -36,7 +37,7 @@
 		
 		.Subcell {
 			flex: 1;
-			border: 1px solid rgb(158, 237, 158, 0.3);
+			
 			&.Active {
 				background-color: magenta;
 			}
