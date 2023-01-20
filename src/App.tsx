@@ -6,7 +6,7 @@ function App() {
 	return (
 		<div className={styles.Container}>
 			<h1>App Test</h1>
-			<CalendarView beginDate={new Date(Date.now())} hours={12}/>
+			<CalendarView startDay="Sunday" startDate={15} hours={12}/>
 		</div>
 	);
 }
