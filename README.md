@@ -6,7 +6,7 @@
 
 - targets:
   - Making appointments (Customer)
-    - [ ] working block-availability interface
+    - [x] working block-availability interface
     - [ ] conversion to firebase timestamps
   - Attending appointments (Business)
     - [ ] implement default schedule
