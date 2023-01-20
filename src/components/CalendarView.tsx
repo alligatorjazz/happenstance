@@ -45,9 +45,9 @@ function DayColumn(props: {
 }) {
 	const state = useContext(CalendarContext);
 	if (!state) { return null; }
-	const subcells = new Array(props.hours)
-		.fill(null)
+	const subcells = [...Array(props.hours).keys()]
 		.map((_, hour) => {
+			
 			const cellLocation = (props.weekIndex * props.hours * 2) + (hour * 2);
 			return <div key={hour} className={styles.Cell}>
 				<div {...bindCell(state, cellLocation)} className={

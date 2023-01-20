@@ -1,6 +1,5 @@
 import { DOMAttributes, MouseEventHandler } from "react";
-import { number } from "zod";
-import { TimeBlock, Weekday, weekdays } from "../types";
+import { Weekday, weekdays } from "../types";
 
 export type CalendarState = {
 	divisions: boolean[],
@@ -15,7 +14,6 @@ export function sortWeek(startDay: Weekday) {
 }
 
 export function bindCell({ setDivisions }: CalendarState, position: number): DOMAttributes<HTMLDivElement> {
-	
 	// loops through divisions, finds the value at divisions[position], switches it, then returns a new array
 	const updateCell: MouseEventHandler<HTMLDivElement> = () => setDivisions(divisions => {
 		console.log("updating subcell at position " + position);
