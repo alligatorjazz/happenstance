@@ -1,31 +1,35 @@
 import { createContext, useContext, useState } from "react";
-import { TimeBlock, Weekday, weekdays } from "../types";
-import { bindCell, CalendarState, sortWeek } from "./CalendarView.lib";
+import { Weekday, weekdays } from "../types";
+import { bindCell, CalendarState, sortWeek, to12Hour } from "./CalendarView.lib";
 import styles from "./CalendarView.module.scss";
 
 const CalendarContext = createContext<CalendarState | null>(null);
-export function CalendarView(props: {
-	startDay: Weekday,
-	startDate: number, // zero-indexed
+export function CalendarView({ beginDate, hours }: {
+	beginDate: Date,
 	hours: number // zero-indexed
 }) {
 	const [divisions, setDivisions] = useState<boolean[]>(
-		new Array(7 * props.hours * 2).fill(false)
+		new Array(7 * hours * 2).fill(false)
 	);
 
-	const week = sortWeek(props.startDay);
-	console.log(week);
+	const start = {
+		dayOfMonth: beginDate.getDate(),
+		dayOfWeek: weekdays[beginDate.getDay()]
+	};
+
+	const week = sortWeek(start.dayOfWeek);
 
 	return (
 		<CalendarContext.Provider value={{ divisions, setDivisions }}>
 			<div className={styles.Container}>
+				<TimeColumn date={beginDate} hours={hours}/>
 				{week.map((weekday, index) =>
 					<DayColumn
 						key={index}
 						weekIndex={index}
 						weekday={weekday}
-						date={props.startDate + index}
-						hours={props.hours}
+						date={start.dayOfMonth + index}
+						hours={hours}
 					/>
 				)}
 			</div>
@@ -48,18 +52,32 @@ function DayColumn(props: {
 			return <div key={hour} className={styles.Cell}>
 				<div {...bindCell(state, cellLocation)} className={
 					`${styles.Subcell} ${state.divisions[cellLocation] ? styles.Active : ""}`
-				}>{cellLocation}</div>
+				}></div>
 				<div {...bindCell(state, cellLocation + 1)} className={
 					`${styles.Subcell} ${state.divisions[cellLocation + 1] ? styles.Active : ""}`
-				}>{cellLocation + 1}</div>
+				}></div>
 			</div>;
 		});
 
 	return (
 		<div className={styles.Column}>
 			<h3>{props.weekday.slice(0, 3)} {props.weekIndex}</h3>
-			<h4>{props.date + 1}</h4>
+			<h4>{props.date}</h4>
 			{subcells}
+		</div>
+	);
+}
+
+function TimeColumn({ date, hours }: { date: Date, hours: number }) {
+	const timeCells = [...Array(hours).keys()].map(offset => {
+		return <div className={styles.Cell} key={offset}>{to12Hour(date.getHours() + offset)}</div>;
+	});
+
+	return (
+		<div className={`${styles.Column} ${styles.TimeColumn}`}>
+			<h3>-</h3>
+			<h4>-</h4>
+			{timeCells}
 		</div>
 	);
 }
