@@ -1,4 +1,4 @@
-import { DOMAttributes } from "react";
+import { DOMAttributes, MouseEventHandler } from "react";
 import { TimeBlock, Weekday, weekdays } from "../types";
 
 export type CalendarState = {
@@ -15,17 +15,21 @@ export function sortWeek(startDay: Weekday) {
 
 export function bindCell({ setDivisions }: CalendarState, position: number): DOMAttributes<HTMLDivElement> {
 	// loops through divisions, finds the value at divisions[position], switches it, then returns a new array
-	const updateCell = () => setDivisions(divisions => {
+	const updateCell: MouseEventHandler<HTMLDivElement> = () => setDivisions(divisions => {
 		console.log("updating subcell at position " + position);
 		return divisions.map(
 			(subcell, index) => index == position ? !subcell : subcell
 		);
-	}
-	);
+	});
 
-
+	const updateCellIfMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+		if (e.buttons == 1) {
+			updateCell(e);
+		}
+	};
 
 	return {
-		onClick: updateCell
+		onClick: updateCell,
+		onMouseEnter: updateCellIfMouseDown
 	};
 }
