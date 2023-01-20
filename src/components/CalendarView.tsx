@@ -1,4 +1,4 @@
-import { Weekday, weekdays } from "../types";
+import { Weekday } from "../types";
 import { sortWeek } from "./CalendarView.lib";
 import styles from "./CalendarView.module.scss";
 
