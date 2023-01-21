@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { Weekday, weekdays } from "../types";
-import { bindCell, CalendarState, sortWeek, to12Hour } from "./CalendarView.lib";
+import { bindCell, CalendarState, sortWeek, to12Hour, exportBlocks } from "./CalendarView.lib";
 import styles from "./CalendarView.module.scss";
 
 const CalendarContext = createContext<CalendarState | null>(null);
@@ -22,7 +22,7 @@ export function CalendarView({ beginDate, hours }: {
 	return (
 		<CalendarContext.Provider value={{ divisions, setDivisions }}>
 			<div className={styles.Container}>
-				<TimeColumn date={beginDate} hours={hours}/>
+				<TimeColumn date={beginDate} hours={hours} />
 				{week.map((weekday, index) =>
 					<DayColumn
 						key={index}
@@ -33,6 +33,7 @@ export function CalendarView({ beginDate, hours }: {
 					/>
 				)}
 			</div>
+			<button onClick={() => exportBlocks(beginDate, divisions)}>Test</button>
 		</CalendarContext.Provider>
 	);
 }
@@ -47,7 +48,7 @@ function DayColumn(props: {
 	if (!state) { return null; }
 	const subcells = [...Array(props.hours).keys()]
 		.map((_, hour) => {
-			
+
 			const cellLocation = (props.weekIndex * props.hours * 2) + (hour * 2);
 			return <div key={hour} className={styles.Cell}>
 				<div {...bindCell(state, cellLocation)} className={
@@ -60,11 +61,14 @@ function DayColumn(props: {
 		});
 
 	return (
-		<div className={styles.Column}>
-			<h3>{props.weekday.slice(0, 3)} {props.weekIndex}</h3>
-			<h4>{props.date}</h4>
-			{subcells}
-		</div>
+		<>
+			<div className={styles.Column}>
+				<h3>{props.weekday.slice(0, 3)} {props.weekIndex}</h3>
+				<h4>{props.date}</h4>
+				{subcells}
+			</div>
+
+		</>
 	);
 }
 
